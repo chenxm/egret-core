@@ -1,3 +1,21 @@
+### build tools
+cd tools
+tsc -p .
+
+
+### change output path
+edit package.json
+.egret.outputRoot
+
+
+### build engine
+./tools/bin/egret make
+
+
+
+
+
+
 <p align="center">
     <img src="./docs/img/egret_logo.jpg"
          height="130">
