@@ -13,7 +13,7 @@ var CompileEgretEngine = /** @class */ (function () {
         var penddings = [];
         var currentPlatform, currentConfig;
         global.registerClass = manifest.registerClass;
-        var outputDir = this.getModuleOutputPath();
+        var outputDir = FileUtil.joinPath(egret.root, manifest.outputRoot); //this.getModuleOutputPath();
         this.compiler = new Compiler_1.Compiler();
         global.registerClass = manifest.registerClass;
         var configurations = [
@@ -46,7 +46,7 @@ var CompileEgretEngine = /** @class */ (function () {
                 var config = configurations_1[_b];
                 for (var _c = 0, _d = manifest.platforms; _c < _d.length; _c++) {
                     var platform = _d[_c];
-                    code = this.buildModule(m, platform, config);
+                    code = this.buildModule(outputDir, m, platform, config);
                     if (code != 0) {
                         delSwanTemp(m);
                         return code;
@@ -59,8 +59,7 @@ var CompileEgretEngine = /** @class */ (function () {
         // this.hideInternalMethods();
         return code;
     };
-    CompileEgretEngine.prototype.buildModule = function (m, platform, configuration) {
-        var _this = this;
+    CompileEgretEngine.prototype.buildModule = function (outDir, m, platform, configuration) {
         var name = m.name;
         var fileName = name;
         var options = egret.args;
@@ -70,13 +69,13 @@ var CompileEgretEngine = /** @class */ (function () {
         if (configuration.minify) {
             fileName += ".min";
         }
-        var depends = m.dependencies.map(function (name) { return _this.getModuleOutputPath(name, name + '.d.ts'); });
+        var depends = m.dependencies.map(function (name) { return FileUtil.joinPath(outDir, name, name + '.d.ts'); });
         if (platform.name != ANY) {
-            depends.push(this.getModuleOutputPath(m.name, name + '.d.ts'));
+            depends.push(FileUtil.joinPath(outDir, m.name, name + '.d.ts'));
         }
-        var outDir = this.getModuleOutputPath(null, null, m.outFile);
-        var declareFile = this.getModuleOutputPath(m.name, fileName + ".d.ts", m.outFile);
-        var singleFile = this.getModuleOutputPath(m.name, fileName + ".js", m.outFile);
+        // var outDir = this.getModuleOutputPath(null, null, m.outFile);
+        var declareFile = FileUtil.joinPath(outDir, m.name, fileName + ".d.ts");
+        var singleFile = FileUtil.joinPath(outDir, m.name, fileName + ".js");
         //var modFile = this.getModuleOutputPath(m.name, fileName + ".mod.js", m.outFile);
         var moduleRoot = FileUtil.joinPath(egret.root, m.root);
         if (!m.root) {

@@ -10,6 +10,7 @@
   "egret": {
     "registerClass": "egret",
     "typeScriptVersion": "1.8",
+    "outputRoot": "../../build/a",
     "modules": [
       {
         "name": "egret",

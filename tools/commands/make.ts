@@ -19,7 +19,7 @@ class CompileEgretEngine implements egret.Command {
         var penddings: egret.EgretModule[] = [];
         var currentPlatform: string, currentConfig: string;
         global.registerClass = manifest.registerClass;
-        var outputDir = this.getModuleOutputPath();
+        var outputDir = FileUtil.joinPath(egret.root, manifest.outputRoot);//this.getModuleOutputPath();
         this.compiler = new Compiler();
         global.registerClass = manifest.registerClass;
         var configurations: egret.CompileConfiguration[] = [
@@ -50,7 +50,7 @@ class CompileEgretEngine implements egret.Command {
             listModuleFiles(m);
             for (let config of configurations) {
                 for (let platform of manifest.platforms) {
-                    code = this.buildModule(m, platform, config);
+                    code = this.buildModule(outputDir, m, platform, config);
                     if (code != 0) {
                         delSwanTemp(m);
                         return code;
@@ -67,7 +67,7 @@ class CompileEgretEngine implements egret.Command {
         return code;
     }
 
-    private buildModule(m: egret.EgretModule, platform: egret.target.Info, configuration: egret.CompileConfiguration) {
+    private buildModule(outDir: string, m: egret.EgretModule, platform: egret.target.Info, configuration: egret.CompileConfiguration) {
 
 
         var name = m.name;
@@ -79,15 +79,15 @@ class CompileEgretEngine implements egret.Command {
         if (configuration.minify) {
             fileName += ".min";
         }
-        var depends = m.dependencies.map(name => this.getModuleOutputPath(name, name + '.d.ts'));
+        var depends = m.dependencies.map(name => FileUtil.joinPath(outDir, name, name + '.d.ts'));
 
         if (platform.name != ANY) {
-            depends.push(this.getModuleOutputPath(m.name, name + '.d.ts'));
+            depends.push(FileUtil.joinPath(outDir, m.name, name + '.d.ts'));
         }
 
-        var outDir = this.getModuleOutputPath(null, null, m.outFile);
-        var declareFile = this.getModuleOutputPath(m.name, fileName + ".d.ts", m.outFile);
-        var singleFile = this.getModuleOutputPath(m.name, fileName + ".js", m.outFile);
+        // var outDir = this.getModuleOutputPath(null, null, m.outFile);
+        var declareFile = FileUtil.joinPath(outDir, m.name, fileName + ".d.ts");
+        var singleFile = FileUtil.joinPath(outDir, m.name, fileName + ".js");
         //var modFile = this.getModuleOutputPath(m.name, fileName + ".mod.js", m.outFile);
 
         var moduleRoot = FileUtil.joinPath(egret.root, m.root);
@@ -146,7 +146,6 @@ class CompileEgretEngine implements egret.Command {
         path += filePath;
         return path;
     }
-
     //     private hideInternalMethods() {
     //         return;
     //         var tempDts: string[] = [];
