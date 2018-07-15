@@ -11,7 +11,9 @@ edit package.json
 ### build engine
 ./tools/bin/egret make
 
-
+### update engine
+cd outputRoot
+egret_engine_update .
 
 
 
