@@ -8,26 +8,12 @@
         "allowUnreachableCode": true,
         "experimentalDecorators": true,
         "strictNullChecks": true,
-        "sourceMap": false,
+        "sourceMap": true,
+        "sourceRoot": "file:///Users/funplus/Library/Application Support/Egret/engine/egret-core/src/extension",
         "lib": [
             "es5",
             "dom",
             "es2015.promise"
         ]
-    },
-    "files": [
-        "src/core/Path.ts",
-        "src/core/FileSystem.ts",
-        "src/core/ResourceConfig.ts",
-        "src/core/ResourceLoader.ts",
-        "src/core/ResourceManager.ts",
-        "src/processor/Processor.ts",
-        "src/shim/ResourceEvent.ts",
-        "src/shim/ResourceItem.ts",
-        "src/DEBUG.ts",
-        "src/shim/native.ts",
-        "src/shim/Resource.ts",
-        "../../../build/egret/egret.d.ts",
-        "../../../build/game/game.d.ts"
-    ]
+    }
 }

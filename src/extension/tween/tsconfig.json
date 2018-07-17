@@ -2,7 +2,7 @@
     "compilerOptions": {
         "target": "es5",
         "sourceMap": true,
-        "sourceRoot": "file:///Users/funplus/Library/Application Support/Egret/engine/egret-core/src",
+        "sourceRoot": "file:///Users/funplus/Library/Application Support/Egret/engine/egret-core/src/extension/tween",
         "declaration": true,
         "allowUnreachableCode": true,
         "newLine": "LF",

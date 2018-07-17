@@ -1,17 +1,19 @@
 {
     "compilerOptions": {
-        "module": "commonjs",
         "target": "es5",
-        "noImplicitAny": false,
-        "sourceMap": false,
+        "sourceMap": true,
+        "sourceRoot": "file:///Users/funplus/Library/Application Support/Egret/engine/egret-core/src/extension/eui",
+        "declaration": true,
+        "allowUnreachableCode": true,
+        "newLine": "LF",
         "lib": [
             "es5",
             "dom",
-            "es2015.promise"
+            "es2015.promise",
+            "scripthost"
         ]
     },
-    "include": [
-        "**/**.ts",
-        "../../../build/egret/**.d.ts"
+    "exclude": [
+        "node_modules"
     ]
 }

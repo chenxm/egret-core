@@ -69,7 +69,7 @@ class CompileEgretEngine implements egret.Command {
 
     private buildModule(outDir: string, m: egret.EgretModule, platform: egret.target.Info, configuration: egret.CompileConfiguration) {
 
-
+        console.log('build module: ' + m.name + ' platform: ' + platform.name);
         var name = m.name;
         var fileName = name;
         var options = egret.args;
@@ -117,9 +117,9 @@ class CompileEgretEngine implements egret.Command {
             return 0;
         tss = depends.concat(tss);
         var dts = platform.declaration && configuration.declaration;
-        let tsconfig = path.join(egret.root, 'src/egret/');
+        let tsconfig = path.join(egret.root, m.root);
         let isPublish = configuration.name != "debug"
-        let compileOptions: ts.CompilerOptions = this.compiler.parseTsconfig(tsconfig, isPublish).options;
+        let compileOptions: ts.CompilerOptions = this.compiler.parseTsconfig(tsconfig + '/', isPublish).options;
         // com
         //make 使用引擎的配置,必须用下面的参数
         compileOptions.declaration = dts;
