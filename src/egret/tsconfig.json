@@ -2,6 +2,7 @@
     "compilerOptions": {
         "target": "es5",
         "sourceMap": true,
+        "sourceRoot": "/Users/funplus/Library/Application Support/Egret/engine/egret-core/src",
         "declaration": true,
         "allowUnreachableCode": true,
         "newLine": "LF",
