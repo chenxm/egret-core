@@ -1,6 +1,6 @@
 {
   "name": "egret",
-  "version": "5.2.9",
+  "version": "5.2.9-debug",
   "private": true,
   "author": "egret-labs",
   "bin": {
@@ -10,6 +10,7 @@
   "egret": {
     "registerClass": "egret",
     "typeScriptVersion": "1.8",
+    "outputRoot": "build",
     "modules": [
       {
         "name": "egret",
@@ -17,11 +18,11 @@
         "description_en": "egret core lib",
         "files": [
           {
-            "path": "../Defines.debug.ts",
+            "path": "Defines.debug.ts",
             "debug": true
           },
           {
-            "path": "../Defines.release.ts",
+            "path": "Defines.release.ts",
             "debug": false
           },
           {
@@ -183,14 +184,6 @@
         ]
       },
       {
-        "name": "assetsmanager",
-        "description": "assetsmanager 资源管理器",
-        "description_en": "AssetsManager",
-        "files": [],
-        "root": "",
-        "dependencies": []
-      },
-      {
         "name": "dragonBones",
         "description": "dragonbones 龙骨动画库",
         "description_en": "dragonbones animation lib",
@@ -206,6 +199,17 @@
         "root": "src/extension/game",
         "dependencies": [
           "egret"
+        ]
+      },
+      {
+        "name": "assetsmanager",
+        "description": "assetsmanager 资源管理器",
+        "description_en": "AssetsManager",
+        "files": [],
+        "root": "src/extension/assetsmanager",
+        "dependencies": [
+          "egret",
+          "game"
         ]
       },
       {

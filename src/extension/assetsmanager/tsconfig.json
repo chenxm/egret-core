@@ -1,14 +1,12 @@
 {
     "compilerOptions": {
         "target": "es5",
-        "outFile": "../../../build/assetsmanager/assetsmanager.js",
         "declaration": true,
         "noImplicitAny": false,
         "stripInternal": true,
         "allowUnreachableCode": true,
         "experimentalDecorators": true,
         "strictNullChecks": true,
-        "sourceMap": false,
         "lib": [
             "es5",
             "dom",
