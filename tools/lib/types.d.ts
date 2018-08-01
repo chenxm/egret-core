@@ -212,7 +212,8 @@ declare module egret {
         configurations: CompileConfiguration[];
         scaleModes: ScaleMode[];
         orientationModes: OrientationMode[];
-        templates: ProjectTemplate[]
+        templates: ProjectTemplate[];
+        outputRoot?: string;
     }
 
     export interface ScaleMode {
