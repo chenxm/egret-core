@@ -8,6 +8,15 @@ var __extends = this && this.__extends || function __extends(t, e) {
     for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
     r.prototype = e.prototype, t.prototype = new r();
 };
+declare var window, generateEUI2;
+declare namespace egret {
+    function getDefinitionByName(type: string);
+    class Rectangle {
+        constructor(a: number, b: number, c: number, d: number);
+    }
+}
+declare var eui: any;
+
 class JSONParseClass {
     private json;
     private skinClass = {};

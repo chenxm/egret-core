@@ -14,12 +14,11 @@ class CompileEgretEngine implements egret.Command {
     public execute(): number {
 
         var code = 0;
-        var options = egret.args;
         var manifest = egret.manifest;
         var penddings: egret.EgretModule[] = [];
         var currentPlatform: string, currentConfig: string;
         global.registerClass = manifest.registerClass;
-        var outputDir = this.getModuleOutputPath();
+        var outputDir = FileUtil.joinPath(egret.root, manifest.outputRoot);//this.getModuleOutputPath();
         this.compiler = new Compiler();
         global.registerClass = manifest.registerClass;
         var configurations: egret.CompileConfiguration[] = [
@@ -50,14 +49,14 @@ class CompileEgretEngine implements egret.Command {
             listModuleFiles(m);
             for (let config of configurations) {
                 for (let platform of manifest.platforms) {
-                    code = this.buildModule(m, platform, config);
+                    code = this.buildModule(outputDir, m, platform, config);
                     if (code != 0) {
                         delSwanTemp(m);
                         return code;
                     }
                 }
             }
-            // break;
+			// break;
             delSwanTemp(m);
         }
 
@@ -67,31 +66,27 @@ class CompileEgretEngine implements egret.Command {
         return code;
     }
 
-    private buildModule(m: egret.EgretModule, platform: egret.target.Info, configuration: egret.CompileConfiguration) {
+    private buildModule(outDir: string, m: egret.EgretModule, platform: egret.target.Info, configuration: egret.CompileConfiguration) {
 
-
-        var name = m.name;
-        var fileName = name;
-        var options = egret.args;
+		console.log('====> build module: ' + m.name + ' config: ' + configuration.name + ' platform: ' + platform.name);
+        var fileName = m.name;
         if (platform.name != ANY) {
             fileName += "." + platform.name;
         }
         if (configuration.minify) {
             fileName += ".min";
         }
-        var depends = m.dependencies.map(name => this.getModuleOutputPath(name, name + '.d.ts'));
+        var depends = m.dependencies.map(name => FileUtil.joinPath(outDir, name, name + '.d.ts'));
 
         if (platform.name != ANY) {
-            depends.push(this.getModuleOutputPath(m.name, name + '.d.ts'));
+            depends.push(FileUtil.joinPath(outDir, m.name, m.name + '.d.ts'));
         }
 
-        var outDir = this.getModuleOutputPath(null, null, m.outFile);
-        var declareFile = this.getModuleOutputPath(m.name, fileName + ".d.ts", m.outFile);
-        var singleFile = this.getModuleOutputPath(m.name, fileName + ".js", m.outFile);
-        //var modFile = this.getModuleOutputPath(m.name, fileName + ".mod.js", m.outFile);
+        var singleFile = FileUtil.joinPath(outDir, m.name, fileName + ".js");
 
         var moduleRoot = FileUtil.joinPath(egret.root, m.root);
         if (!m.root) {
+            console.log("not root ignored: ", m.name);
             return 0;
         }
         var tss: string[] = [];
@@ -117,9 +112,15 @@ class CompileEgretEngine implements egret.Command {
             return 0;
         tss = depends.concat(tss);
         var dts = platform.declaration && configuration.declaration;
-        let tsconfig = path.join(egret.root, 'src/egret/');
-        let isPublish = configuration.name != "debug"
-        let compileOptions: ts.CompilerOptions = this.compiler.parseTsconfig(tsconfig, isPublish).options;
+        let isPublish = configuration.name != "debug";
+        let compileOptions: ts.CompilerOptions = this.compiler.parseTsconfig(moduleRoot + '/', isPublish).options;
+        if (!isPublish) {
+            compileOptions.sourceMap = true;
+			compileOptions.rootDir = moduleRoot;
+			compileOptions.sourceRoot = "file://" + moduleRoot;
+        } else {
+            compileOptions.sourceMap = false;
+        }
         // com
         //make 使用引擎的配置,必须用下面的参数
         compileOptions.declaration = dts;
@@ -146,7 +147,6 @@ class CompileEgretEngine implements egret.Command {
         path += filePath;
         return path;
     }
-
     //     private hideInternalMethods() {
     //         return;
     //         var tempDts: string[] = [];
