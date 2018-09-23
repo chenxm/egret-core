@@ -14,6 +14,11 @@ declare class FBInstant {
      */
     static context: FBInstant.Context;
     /**
+     * 支付处理
+     * Payment
+     */
+    static payments: FBInstant.Payments;
+    /**
      * 获取用户的语言设置，例如:zh_CN en_US
      * The current locale
      */
@@ -53,7 +58,7 @@ declare class FBInstant {
      * 用户从哪个入口进入的游戏
      * Returns the entry point that the game was launched from
      */
-    static getEntryPointAsync(): string;
+    static getEntryPointAsync(): Promise<string>;
     /**
      * 设置会话数据
      * Sets the data associated with the individual gameplay session for the current context.
@@ -84,7 +89,7 @@ declare class FBInstant {
      * 用户是否有资格创建快捷方式。
      * Returns whether or not the user is eligible to have shortcut creation requested.
      */
-    static canCreateShortcutAsync(): Promise<Boolean>;
+    static canCreateShortcutAsync(): Promise<boolean>;
     /**
      * 如果用户有资格，提示用户创建游戏的快捷方式。
      * Prompts the user to create a shortcut to the game if they are eligible to Can only be called once per session. 
@@ -166,7 +171,7 @@ declare namespace FBInstant {
          * 返回一个 promise，表示玩家是否可以与游戏机器人对战。
          * Returns a promise that resolves with whether the player can subscribe to the game bot or not.
          */
-        canSubscribeBotAsync(): Promise<Boolean>;
+        canSubscribeBotAsync(): Promise<boolean>;
         /**
          * 请求玩家订阅游戏机器人。
          * Request that the player subscribe the bot associated to the game. 
@@ -267,7 +272,7 @@ declare namespace FBInstant {
     /**
      * 支付
      */
-    interface payments {
+    interface Payments {
         /**
          * 获取游戏的产品目录。
          * Fetches the game's product catalog.
