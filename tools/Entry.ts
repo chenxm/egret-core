@@ -154,6 +154,9 @@ class Entry {
         var self = this;
         options.command = options.command || "help";
         try {
+            if(options.verbose) {
+                console.log(`require ./commands/${options.command}`);
+            }
             var CommandClass: { new(): egret.Command } = require("./commands/" + options.command);
         }
         catch (e) {

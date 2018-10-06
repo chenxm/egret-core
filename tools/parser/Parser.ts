@@ -122,6 +122,10 @@ export var optionDeclarations: egret.CommandLineOption[] = [
         name: 'sdk',
         type: 'string',
         alias: 's'
+    }, {
+        name: 'verbose',
+        type: 'boolean',
+        alias: 'v'
     }
 
 ];
