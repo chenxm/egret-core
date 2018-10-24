@@ -131,9 +131,13 @@ export namespace server {
         if (egret.args.experimental) {
             startupParams.push("-exp");
         }
+        let stdio = ['ignore', 'ignore', 'ignore'];
+        if(egret.args.verbose) {
+            stdio = ['inherit', 'inherit', 'inherit'];
+        }
         var server = childProcess.spawn(nodePath, startupParams, {
             detached: true,
-            stdio: ['ignore', 'ignore', 'ignore'],
+            stdio: stdio,
             cwd: cwd
         });
 

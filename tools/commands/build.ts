@@ -25,6 +25,9 @@ class Build implements egret.Command {
                 return 0;
             }
             if (FileUtil.exists(project.projectData.getFilePath("tsconfig.json"))) {
+                if(options.verbose) {
+                    console.log(`build library: ${project.projectData.projectRoot}`);
+                }
                 this.buildLib2(packageJson);
                 return 0;
             }
@@ -36,6 +39,9 @@ class Build implements egret.Command {
             project.manager.copyToLibs();
         }
 
+        if(options.verbose) {
+            console.log(`resourcemanager build: ${project.projectData.projectRoot}`);
+        }
 
         const res = require('../lib/resourcemanager');
         const command = "build";
@@ -55,6 +61,13 @@ class Build implements egret.Command {
         let outFile = options.outFile;
         if (!outFile) {
             globals.exit(1122);
+        }
+        if(options.sourceMap) {
+            if(egret.args.verbose) {
+                console.log("source map root: " + projectDir);
+            }
+			options.rootDir = projectDir;
+			options.sourceRoot = "file://" + projectDir;
         }
         compiler.compile(options, fileNames);
         let outDir = path.dirname(outFile);

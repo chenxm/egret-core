@@ -84,6 +84,7 @@ declare module egret {
         removed: string[];
         modified: string[];
         tsconfigError: string[];//tsconfig 配置文件的错误信息
+        verbose?: boolean;
 
         toJSON: () => any;
         getProject(empty?: boolean): egret.EgretProjectConfig;

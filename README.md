@@ -169,3 +169,16 @@ It is recommended that issues be discussed in the [official community portal](ht
 This content is released under the (https://opensource.org/licenses/BSD-2-Clause) BSD License.
 
 ![](https://img.shields.io/badge/license-New%20BSD-blue.svg)
+
+# make engine
+
+## build tools
+
+> cd resourcemanager
+> update
+> cd tools
+> tsc -p .
+
+## build engine
+
+./tools/bin/egret make
