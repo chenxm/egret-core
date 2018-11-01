@@ -11,6 +11,12 @@
             "scripthost"
         ]
     },
+    "files": [
+        "../../../build/egret/egret.d.ts"
+    ],
+    "include": [
+        "**/*.ts"
+    ],
     "exclude": [
         "node_modules"
     ]
